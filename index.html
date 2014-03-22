@@ -38,6 +38,7 @@
         <div class="ui-widget">
             <label for="tags">Search: </label>
             <input id="tags">
+            <a href="#" class="btn btn-large btn-info" id="submit">go</a>
         </div>
 		<script>
             $(function() {
@@ -47,6 +48,11 @@
                 });
             });
 
+            $("#submit").click(
+                function() {
+                    console.log($("#tags").val())
+                }
+            );
 
 			var graph = new NodeGraph("body");
 			$.getJSON("mockdataset.json",
