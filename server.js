@@ -5,9 +5,9 @@ var request = require('request');
 var synonyms = {}, verses = {};
 
 // parses tagData into synonyms and tag relations
-var tagData = fs.readFileSync('tagData.txt').toString();
-tagData.split(/\r?\n/).map(function(str) {
-	var tag = str.split('\t');
+var tagData = fs.readFileSync('tagData.csv').toString();
+tagData.split(/\r?\n/).forEach(function(line) {
+	var tag = line.split(',');
 	if (!tag[0] || !tag[2]) return;
 
 	tag[0] = tag[0].replace(/.*_/, ''); //TODO: actually create sub-tags
@@ -29,7 +29,7 @@ topicalData.split(/\r?\n/).forEach(function(line){
 	if (!parts[0] || !parts[1]) return;
 	if (parseInt(parts[2]) > 10) { // minimum vote filter
 		parts[0] = parts[0].toLowerCase();
-		var tag = verses[synonyms[parts[0]] || parts[0]];
+		var tag = synonyms[parts[0]] || parts[0];
 		if (!verses[tag]) verses[tag] = [];
 		verses[tag].push(parts[1]);
 	}
@@ -72,8 +72,7 @@ server.get('/search', function(req,res) {
 // TODO: don't let dupliate's ocurr
 server.get('/tags.json', function(req,res) {
 	var tags = Object.keys(verses);
-	tags.push(Object.keys(synonyms));
-	res.json(tags);
+	res.json(tags.concat(Object.keys(synonyms)));
 });
 
 function bibleSearch(query, callback){ request({
@@ -89,6 +88,8 @@ function getVerse(verse, callback){ request(
 	verse + '&key=fd37d8f28e95d3be8cb4fbc37e15e18e',
 	callback
 );}
+
+//console.log(verses);
 
 var port = process.env.PORT || 3000;
 server.listen(port);
