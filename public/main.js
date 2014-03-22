@@ -1,5 +1,5 @@
 $(function() {
-  $.getJSON("/tags.json", function(tags) {
+  $.getJSON("http://localhost:3000/tags.json", function(tags) {
     $( "#tags" ).autocomplete({
       source: tags
     });
@@ -21,8 +21,10 @@ function runGraph(tagVal) {
             function(data){
               graph.clear();
               var d = JSONParser.convertKeyValuePairsToNodesAndLinks(data);
+              var colorMap = JSONParser.getColorsMap(data);
+              graph.setColorMap(colorMap);
               for(var i = 0; i < d.nodes.length; i++){
-                graph.addNode(d.nodes[i]);
+                graph.addNode(d.nodes[i], colorMap);
               }
               for(var i = 0; i < d.links.length; i++){
                 graph.addLink(d.links[i].source,d.links[i].target);
