@@ -42,6 +42,16 @@ server.get('/tags.json', function(req,res) {
 	res.json(Object.keys(tags));
 });
 
+// request({
+// 	url: 'https://bibles.org/v2/tags/31.js',
+// 	auth: {
+// 		user: '5Ydn5PkX5Uke1V8UtLQw0oxFlMXB6u7ZFJG4sqlm',
+// 		pass: '', sendImediately: false }}, 
+		
+// 	function(err, res, body) {
+// 		console.log(body);
+// });
+
 var port = process.env.PORT || 3000;
 server.listen(port);
 console.log(__filename + ' is now listening on port ' + port);
