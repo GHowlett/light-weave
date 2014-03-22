@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<!-- D3 -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"></script>
+		<!-- JQuery -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/css/jquery-ui.min.css"></script>
+		
+		<!-- in house -->
+		<script src="js/JsonParser.js"></script>
+		<script src="js/display/bubbleGraph.js"></script>
+		<style>
+			.display{
+				font-family:helvetica;
+			}
+			.display *{
+				
+			}
+			.node{
+				fill:#338DA3;
+			}
+			.link{
+				stroke:rgba(0,0,0,0.5);
+			}
+			.nodeText{
+				fill:white;
+				text-anchor: end;
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+			var graph = new NodeGraph("body");
+			$.getJSON("mockdataset.json",
+			function(data){
+				var d = JSONParser.convertKeyValuePairsToNodesAndLinks(data);
+				for(var i = 0; i < d.nodes.length; i++){
+					graph.addNode(d.nodes[i].name);
+				}
+				for(var i = 0; i < d.links.length; i++){
+					console.log(d.links[i]);
+					graph.addLink(d.links[i].source,d.links[i].target);
+				}
+			},
+			function(err){
+				
+			});
+			
+			console.log(graph);
+		</script>
+	</body>
+</html>
