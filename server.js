@@ -8,6 +8,7 @@ var synonyms = {}, verses = {};
 var tagData = fs.readFileSync('tagData.txt').toString();
 tagData.split(/\r?\n/).map(function(str) {
 	var tag = str.split('\t');
+	if (!tag[0] || !tag[2]) return;
 
 	tag[0] = tag[0].replace(/.*_/, ''); //TODO: actually create sub-tags
 	tag[0] = tag[0].replace(/(?:[a-z])([A-Z])/g, function(match){ 
@@ -16,7 +17,7 @@ tagData.split(/\r?\n/).map(function(str) {
 	verses[tag[0]] = tag[2].split('; ');
 
 	tag[1].split('; ').forEach(function(syn) {
-		synonyms[syn] = tag[0];
+		if (syn) synonyms[syn] = tag[0];
 	});
 });
 
@@ -24,9 +25,11 @@ tagData.split(/\r?\n/).map(function(str) {
 var topicalData = fs.readFileSync('topicalList.csv').toString();
 topicalData.split(/\r?\n/).forEach(function(line){
 	var parts = line.split(',');
+	if (!parts[0] || !parts[1]) return;
 	if (parseInt(parts[2]) > 10) { // minimum vote filter
-		if (!verses[parts[0]]) verses[parts[0]] = [];
-		verses[parts[0]].push(parts[1]);
+		var tag = verses[synonyms[parts[0]] || parts[0]];
+		if (!verses[tag]) verses[tag] = [];
+		verses[tag].push(parts[1]);
 	}
 });
 
@@ -62,6 +65,7 @@ server.get('/search', function(req,res) {
 	});
 });
 
+// TODO: don't let dupliate's ocurr
 server.get('/tags.json', function(req,res) {
 	var tags = Object.keys(verses);
 	tags.push(Object.keys(synonyms));
