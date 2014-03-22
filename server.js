@@ -47,7 +47,6 @@ server.get('/search', function(req,res) {
 	var verse = req.param('v');
 	var question = req.param('q');
 	var tags = req.param('t').toLowerCase().split('_');
-	console.log(req.param('t'), tags);
 
 	// TODO: actually take levels & verses & questions into account
 	// TODO: make keys / tags more fuzzy
