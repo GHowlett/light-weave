@@ -1,4 +1,4 @@
 {
-      "t1": ["v1", "v2", "v3"],
-      "t2": ["v1", "v2", "v4"]
+  "t1": [{"ref":"v1", "content":"ok"}, {"ref":"v2", "content":"asd"}, {"ref":"v3", "content":"lkj"}],
+  "t2": [{"ref":"v1", "content":"ok"}, {"ref":"v2", "content":"asd"}, {"ref":"v4", "content":"lkj"}]
 }

@@ -16,7 +16,7 @@ $.getJSON("mockdataset.json",
 function(data){
 	var d = JSONParser.convertKeyValuePairsToNodesAndLinks(data);
 	for(var i = 0; i < d.nodes.length; i++){
-		graph.addNode(d.nodes[i].name);
+		graph.addNode(d.nodes[i]);
 	}
 	for(var i = 0; i < d.links.length; i++){
 		graph.addLink(d.links[i].source,d.links[i].target);
