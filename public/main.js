@@ -10,7 +10,7 @@ $("#submit").click(function() {
   runGraph(val);
 });
 
-var graph = new NodeGraph("body");
+var graph = new NodeGraph("#svgcontainer");
 
 function runGraph(tagVal) {
   $.getJSON("http://localhost:3000/search?t=" + tagVal,
