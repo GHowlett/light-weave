@@ -6,6 +6,7 @@ $(function() {
 });
 
 $("#submit").click(function(e) {
+  e.preventDefault();
   if (e || e.keyCode == 13) {
     var val = $("#tags").val();
     runGraph(val);
