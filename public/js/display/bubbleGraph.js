@@ -104,6 +104,10 @@ NodeGraph.prototype = {
     .attr('dy', ".35em")
     .text(function(d){
       return d.id;
+    })
+    .on("mouseover", function(d) {
+      $("#versecontainer").empty();
+      $("#versecontainer").append(d.content);
     });
 
     var truncateString = function(input, maxLength) {
