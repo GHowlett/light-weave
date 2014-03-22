@@ -46,7 +46,8 @@ server.get('/search', function(req,res) {
 	var lvlCount = parseInt(req.param('l')) || 3;
 	var verse = req.param('v');
 	var question = req.param('q');
-	var tags = req.param('t').split('+');
+	var tags = req.param('t').toLowerCase().split('_');
+	console.log(req.param('t'), tags);
 
 	// TODO: actually take levels & verses & questions into account
 	// TODO: make keys / tags more fuzzy
@@ -54,17 +55,19 @@ server.get('/search', function(req,res) {
 	var loadCount = 0;
 
 	tags.forEach(function(tag) {
-		loadCount += verses[synonyms[tag] || tag].length;
 		response[tag] = [];
-
-		verses[(synonyms[tag] || tag)].forEach(function(verse) {
-			var i = response[tag].push({ref:verse}) -1;
-			getVerse(verse, function(err, req, body){
-				response[tag][i].content = body;
-				if (!--loadCount) res.json(response);
+		if (verses[synonyms[tag] || tag])
+			verses[(synonyms[tag] || tag)].forEach(function(verse) {
+				var i = response[tag].push({ref:verse}) -1;
+				getVerse(verse, function(err, req, body){
+					response[tag][i].content = body;
+					if (!--loadCount) res.json(response);
+				});
+				loadCount++;
 			});
-		});
 	});
+
+	if (!loadCount) res.json(response); // no matches
 });
 
 // TODO: don't let dupliate's ocurr
