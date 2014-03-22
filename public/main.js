@@ -1,8 +1,9 @@
 $(function() {
-  var tags = Tags.getTags();
-  $( "#tags" ).autocomplete({
-    source: tags
-  });
+  $.getJSON("/tags.json", function(tags) {
+    $( "#tags" ).autocomplete({
+      source: tags
+    });
+  })
 });
 
 $("#submit").click(function(e) {
