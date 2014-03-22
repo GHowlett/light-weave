@@ -31,28 +31,42 @@ server.get('/search', function(req,res) {
 	var tags = req.param('t').split('+');
 
 	// TODO: actually take levels & verses & questions into account
-	res.json(tags.map(function(tag) {
-		// TODO: make keys / tags more fuzzy
-		return verses[tag];
-	})); 
-	
+	// TODO: make keys / tags more fuzzy
+	var response = {};
+	var loadCount = 0;
+
+	tags.forEach(function(tag) {
+		loadCount += verses[tag].length;
+		response[tag] = [];
+
+		verses[tag].forEach(function(verse) {
+			var i = response[tag].push({ref:verse}) -1;
+			getVerse(verse, function(err, req, body){
+				response[tag][i].content = body;
+				if (!--loadCount) res.json(response);
+			});
+		});
+	});
 });
 
 server.get('/tags.json', function(req,res) {
 	res.json(Object.keys(tags));
 });
 
-// request({
-// 	url: 'https://bibles.org/v2/tags/31.js',
-// 	auth: {
-// 		user: '5Ydn5PkX5Uke1V8UtLQw0oxFlMXB6u7ZFJG4sqlm',
-// 		pass: '', sendImediately: false }}, 
-		
-// 	function(err, res, body) {
-// 		console.log(body);
-// });
+function bibleSearch(query, callback){ request({
+	url: 'https://bibles.org/v2/search.js?query=' + query,
+	auth: {
+	user: '5Ydn5PkX5Uke1V8UtLQw0oxFlMXB6u7ZFJG4sqlm',
+	pass: '', sendImediately: false }}, 
+	callback
+);}
+
+function getVerse(verse, callback){ request(
+	'http://api.biblia.com/v1/bible/content/LEB.html?formatting=none&passage=' +
+	verse + '&key=fd37d8f28e95d3be8cb4fbc37e15e18e',
+	callback
+);}
 
 var port = process.env.PORT || 3000;
 server.listen(port);
 console.log(__filename + ' is now listening on port ' + port);
-
