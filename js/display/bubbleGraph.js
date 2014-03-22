@@ -63,6 +63,7 @@ NodeGraph.prototype = {
 		this.update();
 	},
 	//update graph
+	//NOT DONE - I need some actual data to mess around with
 	update : function(){
 		var link = this._display.selectAll('line.link')
 			.data(this.links, function(d){
