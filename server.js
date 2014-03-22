@@ -63,7 +63,9 @@ server.get('/search', function(req,res) {
 });
 
 server.get('/tags.json', function(req,res) {
-	res.json(Object.keys(tags));
+	var tags = Object.keys(verses);
+	tags.push(Object.keys(synonyms));
+	res.json(tags);
 });
 
 function bibleSearch(query, callback){ request({
