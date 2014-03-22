@@ -3,9 +3,9 @@ var fs = require('fs');
 var request = require('request');
 
 var synonyms = {}, verses = {};
-var tagData = fs.readFileSync('tagData.txt').toString();
 
 // parses tagData into synonyms and tag relations
+var tagData = fs.readFileSync('tagData.txt').toString();
 tagData.split(/\r?\n/).map(function(str) {
 	var tag = str.split('\t');
 
@@ -18,6 +18,16 @@ tagData.split(/\r?\n/).map(function(str) {
 	tag[1].split('; ').forEach(function(syn) {
 		synonyms[syn] = tag[0];
 	});
+});
+
+// parses topical_list
+var topicalData = fs.readFileSync('topicalList.csv').toString();
+topicalData.split(/\r?\n/).forEach(function(line){
+	var parts = line.split(',');
+	if (parseInt(parts[2]) > 10) {
+		if (!verses[parts[0]]) verses[parts[0]] = [];
+		verses[parts[0]].push(parts[1]);
+	}
 });
 
 var server = express()
