@@ -11,7 +11,9 @@ JSONParser.convertKeyValuePairsToNodesAndLinks = function(jsonObject) {
       var val = vals[i];
       if (nodeBackMap[val] == null) {
         nodes.push({name: val});
-        nodeBackMap[val] = mapIndex++;
+		
+        //nodeBackMap[val] = mapIndex++;
+		nodeBackMap[val] = val;
       }
     }
   }

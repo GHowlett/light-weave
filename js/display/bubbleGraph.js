@@ -13,7 +13,8 @@ function NodeGraph(el){
 	this.height = $(el).innerHeight();
 	
 	//@private
-	this._display = d3.select(el).append("svg")
+	this._display = d3.select(el).append("svg:svg")
+		.attr("class","display")
 		.attr("width",this.width)
 		.attr("height",this.height);
 	
@@ -31,15 +32,15 @@ function NodeGraph(el){
 }
 
 NodeGraph.prototype = {
-	addNode : function(id, data){
+	addNode : function(id){
 		this.nodes.push({
-			id:id,
-			data:data
+			id:id
 		});
+		this.update();
 	},
 	findNode : function(id){
 		for (var i = 0, _len = this.nodes.length; i < _len; i++){
-			if( this.nodes[i]["id"] === id ) return nodes[i];
+			if( this.nodes[i]["id"] === id ) return this.nodes[i];
 		}
 	},
 	findNodeIndex : function(id){
@@ -56,6 +57,7 @@ NodeGraph.prototype = {
 				this.links.splice(i,1);
 			} else i++;
 		}
+		this.update();
 	},
 	addLink : function(source , target){
 		this.links.push({
@@ -67,6 +69,9 @@ NodeGraph.prototype = {
 	//update graph
 	//NOT DONE - I need some actual data to mess around with
 	update : function(){
+		//clear
+		this._display.selectAll("*").remove();
+		//append
 		var link = this._display.selectAll('line.link')
 			.data(this.links, function(d){
 				return d.source.id + "-" + d.target.id;
@@ -79,9 +84,15 @@ NodeGraph.prototype = {
 			.data(this.nodes, function(d) {
 				return d.id;
 			});
+		
+		
 		var nodeEnter = node.enter().append("g")
 			.attr('class', "node")
-			.call(force.drag);
+			.call(this._force.drag);
+			
+		nodeEnter.append("circle")
+			.attr("class","nodeBody")
+			.attr("r",20)
 		
 		nodeEnter.append("text")
 			.attr("class", "nodeText")
@@ -89,12 +100,14 @@ NodeGraph.prototype = {
 			.attr('dy', ".35em")
 			.text(function(d){
 				return d.id;
-			}):
+			});
 		
-		node.exit.remove();
+		node.exit().remove();
+		
+		
 		
 		//force update
-		force.on("tick", function(){
+		this._force.on("tick", function(){
 			link.attr("x1", function(d){ return d.source.x;})
 				.attr("y1", function(d){ return d.source.y; })
 				.attr("x2", function(d){ return d.target.x; })
@@ -105,6 +118,6 @@ NodeGraph.prototype = {
 			});
 		});
 		
-		force.start();
+		this._force.start();
 	}
 };
