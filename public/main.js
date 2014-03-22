@@ -15,7 +15,7 @@ var graph = new NodeGraph("body");
 function runGraph(tagVal) {
   $.getJSON("http://localhost:3000/search?t=" + tagVal,
             function(data){
-
+              graph.clear();
               var d = JSONParser.convertKeyValuePairsToNodesAndLinks(data);
               for(var i = 0; i < d.nodes.length; i++){
                 graph.addNode(d.nodes[i]);

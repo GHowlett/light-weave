@@ -106,11 +106,24 @@ NodeGraph.prototype = {
       return d.id;
     });
 
+    var truncateString = function(input, maxLength) {
+      maxLength = maxLength || 200;
+      if (input.length <= maxLength) {return input;}
+      var subsString = "...";
+      var firstPartString = input.substring(0, maxLength/2 - subsString.length/2);
+      var remainingLength = maxLength - (firstPartString.length + subsString.length);
+
+      var indexOfSecondHalf = input.length - remainingLength;
+      var secondPartString = input.substring(indexOfSecondHalf);
+
+      return firstPartString + subsString + secondPartString;
+    }
+
     $(".nodeText").tipsy({
       gravity: 'w',
       html: true,
       title: function() {
-        return this.__data__.content;
+        return truncateString(this.__data__.content);
       }
     });
 
@@ -132,8 +145,8 @@ NodeGraph.prototype = {
 		this._force.start();
 	},
   clear: function() {
-    this.nodes = this.nodes.splice(0,this.nodes.length);
-    this.links = this.links.splice(0, this.links.length);
+    this.nodes.splice(0, this.nodes.length);
+    this.links.splice(0, this.links.length);
     this.update();
   }
 };
