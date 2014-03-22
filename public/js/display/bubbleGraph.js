@@ -104,8 +104,6 @@ NodeGraph.prototype = {
 		
 		node.exit().remove();
 		
-		
-		
 		//force update
 		this._force.on("tick", function(){
 			link.attr("x1", function(d){ return d.source.x;})

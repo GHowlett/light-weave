@@ -19,7 +19,6 @@ function(data){
 		graph.addNode(d.nodes[i].name);
 	}
 	for(var i = 0; i < d.links.length; i++){
-		console.log(d.links[i]);
 		graph.addLink(d.links[i].source,d.links[i].target);
 	}
 },
