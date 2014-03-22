@@ -15,24 +15,8 @@
 		<script src="js/JsonParser.js"></script>
         <script src="js/Tags.js"></script>
 		<script src="js/display/bubbleGraph.js"></script>
-		<style>
-			.display{
-				font-family:helvetica;
-			}
-			.display *{
-
-			}
-			.node{
-				fill:#338DA3;
-			}
-			.link{
-				stroke:rgba(0,0,0,0.5);
-			}
-			.nodeText{
-				fill:white;
-				text-anchor: end;
-			}
-		</style>
+		
+		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
         <div class="ui-widget">
@@ -40,37 +24,6 @@
             <input id="tags">
             <a href="#" class="btn btn-large btn-info" id="submit">go</a>
         </div>
-		<script>
-            $(function() {
-                var tags = Tags.getTags();
-                $( "#tags" ).autocomplete({
-                    source: tags
-                });
-            });
-
-            $("#submit").click(
-                function() {
-                    console.log($("#tags").val())
-                }
-            );
-
-			var graph = new NodeGraph("body");
-			$.getJSON("mockdataset.json",
-			function(data){
-				var d = JSONParser.convertKeyValuePairsToNodesAndLinks(data);
-				for(var i = 0; i < d.nodes.length; i++){
-					graph.addNode(d.nodes[i].name);
-				}
-				for(var i = 0; i < d.links.length; i++){
-					console.log(d.links[i]);
-					graph.addLink(d.links[i].source,d.links[i].target);
-				}
-			},
-			function(err){
-
-			});
-
-			console.log(graph);
-		</script>
+		<script src="main.js"></script>
 	</body>
 </html>
