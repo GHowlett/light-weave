@@ -24,11 +24,14 @@ tagData.split(/\r?\n/).map(function(str) {
 var topicalData = fs.readFileSync('topicalList.csv').toString();
 topicalData.split(/\r?\n/).forEach(function(line){
 	var parts = line.split(',');
-	if (parseInt(parts[2]) > 10) {
+	if (parseInt(parts[2]) > 10) { // minimum vote filter
 		if (!verses[parts[0]]) verses[parts[0]] = [];
 		verses[parts[0]].push(parts[1]);
 	}
 });
+
+// ---------------------------------------------------
+// ---------------------------------------------------
 
 var server = express()
 	.use(express.static(__dirname + '/public'))
