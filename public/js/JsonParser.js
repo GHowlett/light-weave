@@ -12,7 +12,7 @@ JSONParser.convertKeyValuePairsToNodesAndLinks = function(jsonObject) {
       if (nodeBackMap[val.ref] == null) {
         nodes.push({name: val.ref, content: val.content});
 
-		nodeBackMap[val.ref] = val.ref;
+        nodeBackMap[val.ref] = val.ref;
       }
     }
   }

@@ -95,13 +95,22 @@ NodeGraph.prototype = {
 			.attr("class","nodeBody")
 			.attr("r",20)
 
-		nodeEnter.append("text")
-			.attr("class", "nodeText")
-			.attr("dx", 12)
-			.attr('dy', ".35em")
-			.text(function(d){
-				return d.id;
-			});
+    nodeEnter.append("text")
+    .attr("class", "nodeText")
+    .attr("dx", 12)
+    .attr('dy', ".35em")
+    .text(function(d){
+      return d.id;
+    });
+
+    $(".nodeText").tipsy({
+      gravity: 'w',
+      html: true,
+      title: function() {
+        return this.__data__.content;
+      }
+    });
+
 
 		node.exit().remove();
 
