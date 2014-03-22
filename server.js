@@ -46,10 +46,10 @@ server.get('/search', function(req,res) {
 	var loadCount = 0;
 
 	tags.forEach(function(tag) {
-		loadCount += verses[tag].length;
+		loadCount += verses[synonyms[tag] || tag].length;
 		response[tag] = [];
 
-		verses[tag].forEach(function(verse) {
+		verses[(synonyms[tag] || tag)].forEach(function(verse) {
 			var i = response[tag].push({ref:verse}) -1;
 			getVerse(verse, function(err, req, body){
 				response[tag][i].content = body;
