@@ -53,11 +53,14 @@ NodeGraph.prototype = {
 		var i = 0;
 		var n = this.findNode(id);
 
+
 		while( i < this.links.length ){
 			if( (this.links[i]['source'] == n) || (this.links[i]['target'] == n) ){
 				this.links.splice(i,1);
 			} else i++;
 		}
+    var m = this.findNodeIndex(id);
+    this.nodes.splice(m,1);
 		this.update();
 	},
 	addLink : function(source , target){
@@ -127,5 +130,10 @@ NodeGraph.prototype = {
 		});
 
 		this._force.start();
-	}
+	},
+  clear: function() {
+    this.nodes = this.nodes.splice(0,this.nodes.length);
+    this.links = this.links.splice(0, this.links.length);
+    this.update();
+  }
 };

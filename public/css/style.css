@@ -2,7 +2,7 @@
 	font-family:helvetica;
 }
 .display *{
-	
+
 }
 .node{
 	fill:#338DA3;
@@ -11,6 +11,6 @@
 	stroke:rgba(0,0,0,0.5);
 }
 .nodeText{
-	fill:white;
+	fill:black;
 	text-anchor: end;
 }
