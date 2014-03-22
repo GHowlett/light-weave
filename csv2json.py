@@ -1,8 +1,9 @@
 import csv
 import json
+from sys import argv
 
-csvfile = open('data.csv', 'r')
-jsonfile = open('data.json', 'w')
+csvfile = open(argv[1], 'r')
+jsonfile = open(argv[2], 'w')
 
 fieldnames = ("Verses", "Theme", "Emotion", "Images", "Genre", "Character", "Location", "Gender", "Question about God's Presence", "Answers")
 
