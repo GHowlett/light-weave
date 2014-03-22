@@ -14,10 +14,11 @@ tagData.split(/\r?\n/).map(function(str) {
 	tag[0] = tag[0].replace(/(?:[a-z])([A-Z])/g, function(match){ 
 		return match[0] + ' ' + match[1]; // remove camel case
 	});
-	verses[tag[0]] = tag[2].split('; ');
+	tag[0] = tag[0].toLowerCase();
 
+	verses[tag[0]] = tag[2].split('; ');
 	tag[1].split('; ').forEach(function(syn) {
-		if (syn) synonyms[syn] = tag[0];
+		if (syn) synonyms[syn.toLowerCase()] = tag[0];
 	});
 });
 
@@ -27,6 +28,7 @@ topicalData.split(/\r?\n/).forEach(function(line){
 	var parts = line.split(',');
 	if (!parts[0] || !parts[1]) return;
 	if (parseInt(parts[2]) > 10) { // minimum vote filter
+		parts[0] = parts[0].toLowerCase();
 		var tag = verses[synonyms[parts[0]] || parts[0]];
 		if (!verses[tag]) verses[tag] = [];
 		verses[tag].push(parts[1]);
