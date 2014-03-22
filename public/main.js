@@ -5,9 +5,11 @@ $(function() {
   });
 });
 
-$("#submit").click(function() {
-  var val = $("#tags").val();
-  runGraph(val);
+$("#submit").click(function(e) {
+  if (e || e.keyCode == 13) {
+    var val = $("#tags").val();
+    runGraph(val);
+  }
 });
 
 var graph = new NodeGraph("body");
@@ -25,7 +27,7 @@ function runGraph(tagVal) {
               }
             },
             function(err){
-              //tERROR!
+              alert("Not valid search term!");
             });
 }
 
