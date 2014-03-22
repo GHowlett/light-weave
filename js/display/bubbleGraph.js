@@ -1,26 +1,23 @@
-var WIDTH = window.innerWidth
-	, HEIGHT = window.innerHeight;
+/*
+	The main graph that display the data
+*/
 
-var color = d3.scale.category20();
-
-var force= d3.layout.force()
-	.charge(-120)
-	.linkDistance(30)
-	.size( [WIDTH,HEIGHT] );
-
-var svg = d3.select("body").append(svg)
-	.attr("width", WIDTH)
-	.attr("height", HEIGHT);
-
-
+/*
+	Creates a force node graph
+	@constructor
+	@this {NodeGraph}
+	@param {string|domElement} el - the element to attach the graph to (ex: "body") 
+*/
 function NodeGraph(el){
 	this.width = $(el).innerWidth();
 	this.height = $(el).innerHeight();
 	
+	//@private
 	this._display = d3.select(el).append("svg")
 		.attr("width",this.width)
 		.attr("height",this.height);
 	
+	//@private
 	this._force = d3.layout.force()
 		.gravity(.05)
 		.distance(100)
@@ -65,6 +62,7 @@ NodeGraph.prototype = {
 		});
 		this.update();
 	},
+	//update graph
 	update : function(){
 		var link = this._display.selectAll('line.link')
 			.data(this.links, function(d){
@@ -78,6 +76,5 @@ NodeGraph.prototype = {
 			.data(this.nodes, function(d) {
 				return d.id;
 			});
-		
 	}
 };
