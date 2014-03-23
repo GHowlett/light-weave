@@ -52,6 +52,12 @@ body{
 #searchbar{
 	box-flex:0;
 	-webkit-box-flex:0;
+	display: inline-block;
+}
+
+#outer {
+	width: 100%;
+	text-align: center;
 }
 
 .main-view{
