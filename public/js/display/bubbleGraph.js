@@ -27,9 +27,9 @@ function NodeGraph(el,w,h){
 
   //@private
   this._force = d3.layout.force()
-  .gravity(.0)
+  .gravity(0.1)
   .distance(100)
-  .charge(-150)
+  .charge(-100)
   .linkDistance(100)
   .size([w, h]);
 
@@ -37,7 +37,7 @@ function NodeGraph(el,w,h){
   this.links = this._force.links();
   this.colorMap = {};
   this.legendLoaded = false;
-  this.update();
+
 }
 
 NodeGraph.prototype = {
@@ -49,7 +49,7 @@ NodeGraph.prototype = {
       id:verseNode.name,
       content:verseNode.content
     });
-    this.update();
+
   },
   findNode : function(id){
     for (var i = 0, _len = this.nodes.length; i < _len; i++){
@@ -72,14 +72,14 @@ NodeGraph.prototype = {
     }
     var m = this.findNodeIndex(id);
     this.nodes.splice(m,1);
-    this.update();
+
   },
   addLink : function(source , target){
     this.links.push({
       source: this.findNode(source),
       target: this.findNode(target)
     });
-    this.update();
+
   },
   //update graph
   //NOT DONE - I need some actual data to mess around with

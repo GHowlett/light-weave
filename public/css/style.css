@@ -61,6 +61,9 @@ body{
 
 #outer {
 	width: 100%;
+  background-image: url("LightWeave_Banner_transparent-07.png");
+  background-size: contain;
+  background-repeat: no-repeat;
 	text-align: center;
 }
 

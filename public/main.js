@@ -38,6 +38,7 @@ function runGraph(tagVal) {
               else {
                 $("#displayquery").text(tagVal.slice(2));
               }
+              graph.update();
             },
             function(err){
               alert("Error: " + err);
