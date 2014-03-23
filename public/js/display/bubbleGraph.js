@@ -116,7 +116,7 @@ NodeGraph.prototype = {
     })
     .on("click", function(d) {
       console.log(d.id);
-      runGraph("v=" + d.id + "&l=3");
+      runGraph("v=" + d.id);
     });
 
     var colorMap = this.colorMap || {};

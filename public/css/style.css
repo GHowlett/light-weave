@@ -61,6 +61,13 @@ body{
 	text-align: center;
 }
 
+#displayquery {
+  width: 100%;
+  text-align:center;
+  color: #7E8082;
+  font-size: 18;
+}
+
 .main-view{
 	display: box;
 	display: -webkit-box;
