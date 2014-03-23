@@ -114,14 +114,8 @@ NodeGraph.prototype = {
     .attr("class","nodeBody")
     .attr("r",15)
     .on("mouseover", function(d) {
-      t = setTimeout(function() {
-         $("#versecontainer").empty();
-         $("#versecontainer").append("<b>" + d.id + "</b>" + d.content);
-      }, 2000);
-    })
-    .on('mouseout', function(d){
-      clearTimeout(t);
-      t = null;
+      $("#versecontainer").empty();
+      $("#versecontainer").append("<b>" + d.id + "</b>" + d.content);
     })
     .on("click", function(d) {
       console.log(d.id);
