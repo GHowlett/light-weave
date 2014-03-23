@@ -85,6 +85,8 @@ NodeGraph.prototype = {
   //NOT DONE - I need some actual data to mess around with
   update : function(){
     //clear
+    var t;  // Variable to store timeout time
+
     this._display.attr("width",0).attr("height",0);
     this.width = this.el.innerWidth();
     this.height = this.el.innerHeight();
@@ -112,8 +114,14 @@ NodeGraph.prototype = {
     .attr("class","nodeBody")
     .attr("r",15)
     .on("mouseover", function(d) {
-      $("#versecontainer").empty();
-      $("#versecontainer").append("<b>" + d.id + "</b>" + d.content);
+      t = setTimeout(function() {
+         $("#versecontainer").empty();
+         $("#versecontainer").append("<b>" + d.id + "</b>" + d.content);
+      }, 2000);
+    })
+    .on('mouseout', function(d){
+      clearTimeout(t);
+      t = null;
     })
     .on("click", function(d) {
       console.log(d.id);
