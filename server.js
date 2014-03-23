@@ -87,8 +87,13 @@ server.get('/search', function(req,res) {
 					tags[verses[tag][i]].push(tag);
 
 		var tagArr = [];
-		for (var verse in tags) 
-			tagArr = tagArr.concat(tags[verse]);
+		for (var verse in tags)
+			tags[verse].forEach(function(tag) {
+				console.log(tagArr.indexOf(tag));
+				if (tagArr.indexOf(tag) === -1)
+					tagArr.push(tag); });
+
+		console.log(tagArr);
 		return tagsToVerses(tagArr);
 	}
 
