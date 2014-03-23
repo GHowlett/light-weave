@@ -32,12 +32,15 @@ function runGraph(tagVal) {
                 graph.addLink(d.links[i].source,d.links[i].target);
               }
               $("#tags").val('');
-              $("#displayquery").text(tagVal.slice(2));
+              if (d['nodes'].length <= 0) {
+                $("#displayquery").text("Sorry, " + tagVal.slice(2) + " does not return any values!  Try another search.");
+              }
+              else {
+                $("#displayquery").text(tagVal.slice(2));
+              }
             },
             function(err){
-              alert("Not valid search term!");
+              alert("Error: " + err);
             });
 }
 
-
-console.log(graph);
