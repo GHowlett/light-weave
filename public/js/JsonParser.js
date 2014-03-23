@@ -1,16 +1,40 @@
 var JSONParser = {};
 
 JSONParser.getColorsMap = function(jsonObject) {
-  var colorString = ["#007F35","#61BB46","#24866A","#004A46","#003B76","#0073B1","#00B0EF","#A3D7EF","#590047","#883375","#C92E46","#A9719D","#932E2B","#D95934","#AA6435","#F38487","#F8991C","#FFE000","#FDC364","#7E8082"];
+  var colorString = [
+		"#007F35",
+		"#003B76",
+		"#590047",
+		"#932E2B",
+		"#F8991C",
+
+		"#61BB46",
+		"#0073B1",
+		"#883375",
+		"#D95934",
+		"#FFE000",
+
+		"#24866A",
+		"#00B0EF",
+		"#C92E46",
+		"#AA6435",
+		"#FDC364",
+
+		"#004A46",
+		"#A3D7EF",
+		"#A9719D",
+		"#F38487",
+		"#7E8082"
+  ];
   var colorMap = {};
   colorMap["keys"] = [];
+  var randomIndex = (colorString.length * Math.random())|0;
   for (var keyIndex in Object.keys(jsonObject)) {
 
     var key = Object.keys(jsonObject)[keyIndex];
 
-    var randomIndex = Math.round(colorString.length * Math.random());
-
-    var colorAssignedToKey = colorString[randomIndex];
+    var colorAssignedToKey = colorString[randomIndex++];
+	if(randomIndex >= colorString.length)randomIndex=0;
 
     colorMap["keys"].push({"key": key, "color": colorAssignedToKey});
 
