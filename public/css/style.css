@@ -40,7 +40,7 @@ body{
 	background-image: url("LightWeave_Sidebar-02.png");
 	background-size: contain;
 	background-repeat: no-repeat;
-	padding-left:5%;
+	padding:0 5%;
 	width:30%;
 }
 
@@ -67,4 +67,9 @@ body{
 	-webkit-box-orient:horizontal;
 	box-flex:1;
 	-webkit-box-flex:1;
+}
+
+.ui-autocomplete{
+	overflow:auto;
+	max-height:50%;
 }

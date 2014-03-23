@@ -23,6 +23,7 @@ tagData.split(/\r?\n/).forEach(function(line) {
 });
 
 // parses topical_list
+// TODO: convert to same format as tagData
 var topicalData = fs.readFileSync('topicalList.csv').toString();
 topicalData.split(/\r?\n/).forEach(function(line){
 	var parts = line.split(',');
@@ -46,19 +47,22 @@ server.get('/search', function(req,res) {
 	var lvlCount = parseInt(req.param('l')) || 3;
 	if (lvlCount < 2) lvlCount = 2;
 
-	var verse = req.param('v');
+	var passages = req.param('v') && req.param('v').split('_');
 	var question = req.param('q');
-	var tags = req.param('t').toLowerCase().split('_');
+	var tags = req.param('t') && req.param('t').toLowerCase().split('_');
 
 	// TODO: make keys / tags more fuzzy
 	var response = {};
 	var loadCount = 0;
 	
-	var tagVerGroups = tagsToVerses(tags);
-	while(--lvlCount -1)
+	var tagVerGroups = passages
+		? expandVerses(passages)
+		: tagsToVerses(tags);
+
+	while(--lvlCount -1) {
 		tagVerGroups = tagVerGroups.map(function(vers) {
 			return expandVerses(vers);
-		});
+	}); }
 
 	function tagsToVerses(tags) {
 		return tags.map(function(tag) {
@@ -76,6 +80,7 @@ server.get('/search', function(req,res) {
 			tags[verse] = [];
 		});
 
+		// TODO: match overlapping ranges of passages
 		for (var tag in verses)
 			for (var i= 0; i< verses[tag].length; i++)
 				if (tags[verses[tag][i]])
