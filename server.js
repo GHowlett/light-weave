@@ -101,7 +101,7 @@ server.get('/search', function(req,res) {
 		getVerse(verse, function(err, req, body){
 			response[tag][i].content = body;
 			if (!--loadCount) 
-				res.json(limit(response, 9));
+				res.json(limit(response, 9, 20));
 		});
 		loadCount++;
 	}
@@ -124,13 +124,17 @@ function random (min, max) {
 };
 
 // TODO: maybe remove 
-function limit(obj, n) {
+function limit(obj, tagCount, versesPerTag) {
 	var keys = Object.keys(obj);
-	while (keys.length > n) {
+	while (keys.length > tagCount) {
 		var rand = random(keys.length -1);
 		delete obj[keys[rand]];
 		keys.splice(rand,1);
 	}
+
+	keys.forEach(function(key) {
+		obj[key] = obj[key].slice(0,versesPerTag);
+	});
 	return obj;
 }
 
