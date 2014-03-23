@@ -64,6 +64,7 @@ server.get('/search', function(req,res) {
 			return expandVerses(vers);
 	}); }
 
+	// TODO: prevent cycles
 	function tagsToVerses(tags) {
 		return tags.map(function(tag) {
 			response[tag] = [];
@@ -89,11 +90,9 @@ server.get('/search', function(req,res) {
 		var tagArr = [];
 		for (var verse in tags)
 			tags[verse].forEach(function(tag) {
-				console.log(tagArr.indexOf(tag));
 				if (tagArr.indexOf(tag) === -1)
 					tagArr.push(tag); });
 
-		console.log(tagArr);
 		return tagsToVerses(tagArr);
 	}
 
@@ -101,7 +100,8 @@ server.get('/search', function(req,res) {
 		var i = response[tag].push({ref:verse}) -1;
 		getVerse(verse, function(err, req, body){
 			response[tag][i].content = body;
-			if (!--loadCount) res.json(response);
+			if (!--loadCount) 
+				res.json(limit(response, 9));
 		});
 		loadCount++;
 	}
@@ -114,6 +114,25 @@ server.get('/tags.json', function(req,res) {
 	var tags = Object.keys(verses);
 	res.json(tags.concat(Object.keys(synonyms)));
 });
+
+function random (min, max) {
+	if (max == null) {
+		max = min;
+		min = 0;
+	}
+	return min + Math.floor(Math.random() * (max - min + 1));
+};
+
+// TODO: maybe remove 
+function limit(obj, n) {
+	var keys = Object.keys(obj);
+	while (keys.length > n) {
+		var rand = random(keys.length -1);
+		delete obj[keys[rand]];
+		keys.splice(rand,1);
+	}
+	return obj;
+}
 
 function bibleSearch(query, callback){ request({
 	url: 'https://bibles.org/v2/search.js?query=' + query,
