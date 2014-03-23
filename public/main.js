@@ -14,7 +14,7 @@ $("#submit").click(function(e) {
   }
 });
 
-var graph = new NodeGraph("#svgcontainer");
+var graph = new NodeGraph("#svgcontainer",400,400);
 
 function runGraph(tagVal) {
   $.getJSON("http://localhost:3000/search?t=" + tagVal,

@@ -8,22 +8,29 @@
 	@this {NodeGraph}
 	@param {string|domElement} el - the element to attach the graph to (ex: "body")
 */
-function NodeGraph(el){
-  this.width = $(el).innerWidth();
-  this.height = $(el).innerHeight();
+function NodeGraph(el,w,h){
+	this.el = $(el);
+	this.width = $(el).innerWidth();
+	this.height = $(el).innerHeight();
+	
+	var scope = this;
+	$(window).resize(function(){
+		scope.update();
+	});
 
   //@private
   this._display = d3.select(el).append("svg:svg")
   .attr("class","display")
   .attr("width",this.width)
-  .attr("height",this.height);
+  .attr("height",this.height)
+  .attr("viewBox", "0,0,"+[w,h].join(","));
 
   //@private
   this._force = d3.layout.force()
   .gravity(.05)
   .distance(100)
   .charge(-100)
-  .size([this.width, this.height]);
+  .size([w, h]);
 
   this.nodes = this._force.nodes();
   this.links = this._force.links();
@@ -77,6 +84,10 @@ NodeGraph.prototype = {
   //NOT DONE - I need some actual data to mess around with
   update : function(){
     //clear
+	this._display.attr("width",0).attr("height",0);
+	this.width = this.el.innerWidth();
+	this.height = this.el.innerHeight();
+	this._display.attr("width",this.width).attr("height",this.height);
     this._display.selectAll("*").remove();
     //append
     var link = this._display.selectAll('line.link')

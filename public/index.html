@@ -24,14 +24,15 @@
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
-        <form class="ui-widget">
+        <form class="ui-widget" id="searchbar">
             <label for="tags">Search: </label>
             <input id="tags">
             <button type="submit" class="btn btn-large btn-info" id="submit">go</button>
         </form>
-        <div id="colorcontainer"></div>
-		<div id="svgcontainer"></div>
-		<div id="versecontainer"></div>
+		<div class="main-view">
+			<div id="svgcontainer"></div>
+			<div id="versecontainer"></div>
+		</div>
 		<script src="main.js"></script>
 	</body>
 
