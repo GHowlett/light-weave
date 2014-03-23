@@ -113,6 +113,10 @@ NodeGraph.prototype = {
     .on("mouseover", function(d) {
       $("#versecontainer").empty();
       $("#versecontainer").append("<b>" + d.id + "</b>" + d.content);
+    })
+    .on("click", function(d) {
+      console.log(d.id);
+      runGraph("v=" + d.id + "&l=3");
     });
 
     var colorMap = this.colorMap || {};

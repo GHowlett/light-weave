@@ -1,25 +1,12 @@
-$(function() {
-  $.getJSON("http://localhost:3000/tags.json", function(tags) {
-    $( "#tags" ).autocomplete({
-      source: tags
-    });
-  })
-});
+var Renderer = Renderer || {};
 
-$("#submit").click(function(e) {
-  e.preventDefault();
-  if (e || e.keyCode == 13) {
-    var val = $("#tags").val();
-    runGraph("t="+val);
-  }
-});
+Renderer.graph = new NodeGraph("#svgcontainer",400,400);
 
-var graph = new NodeGraph("#svgcontainer",800,800);
-
-function runGraph(tagVal) {
+Renderer.runGraph = function(tagVal) {
+  var that = this;
   $.getJSON("http://localhost:3000/search?" + tagVal,
             function(data){
-              var paramType = tagVal.slice(0,1);
+              var graph = that.graph;
               graph.clear();
               var d = JSONParser.convertKeyValuePairsToNodesAndLinks(data);
               var colorMap = JSONParser.getColorsMap(data);
@@ -37,6 +24,3 @@ function runGraph(tagVal) {
               alert("Not valid search term!");
             });
 }
-
-
-console.log(graph);

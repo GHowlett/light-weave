@@ -57,6 +57,7 @@ JSONParser.convertKeyValuePairsToNodesAndLinks = function(jsonObject) {
   var nodeBackMap = {};
   for (index in Object.keys(jsonObject)) {
     var key = Object.keys(jsonObject)[index];
+    console.log(key);
     var vals = jsonObject[key];
     for (var i = 0; i < vals.length; i++) {
       var val = vals[i];
