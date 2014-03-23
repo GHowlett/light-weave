@@ -1,5 +1,5 @@
 $(function() {
-  $.getJSON("http://localhost:3000/tags.json", function(tags) {
+  $.getJSON("tags.json", function(tags) {
     $( "#tags" ).autocomplete({
       source: tags
     });
