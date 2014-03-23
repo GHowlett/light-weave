@@ -44,27 +44,57 @@ var server = express()
 
 server.get('/search', function(req,res) {
 	var lvlCount = parseInt(req.param('l')) || 3;
+	if (lvlCount < 2) lvlCount = 2;
+
 	var verse = req.param('v');
 	var question = req.param('q');
 	var tags = req.param('t').toLowerCase().split('_');
 
-	// TODO: actually take levels & verses & questions into account
 	// TODO: make keys / tags more fuzzy
 	var response = {};
 	var loadCount = 0;
+	
+	var tagVerGroups = tagsToVerses(tags);
+	while(--lvlCount -1)
+		tagVerGroups = tagVerGroups.map(function(vers) {
+			return expandVerses(vers);
+		});
 
-	tags.forEach(function(tag) {
-		response[tag] = [];
-		if (verses[synonyms[tag] || tag])
-			verses[(synonyms[tag] || tag)].forEach(function(verse) {
-				var i = response[tag].push({ref:verse}) -1;
-				getVerse(verse, function(err, req, body){
-					response[tag][i].content = body;
-					if (!--loadCount) res.json(response);
-				});
-				loadCount++;
-			});
-	});
+	function tagsToVerses(tags) {
+		return tags.map(function(tag) {
+			response[tag] = [];
+			if (!verses[synonyms[tag] || tag]) return [];
+			var newVerses = verses[(synonyms[tag] || tag)];
+			newVerses.forEach(loadVerse.bind(this,tag));
+			return newVerses;
+		});
+	}
+
+	function expandVerses(vers) {
+		var tags = {};
+		vers.forEach(function(verse){
+			tags[verse] = [];
+		});
+
+		for (var tag in verses)
+			for (var i= 0; i< verses[tag].length; i++)
+				if (tags[verses[tag][i]])
+					tags[verses[tag][i]].push(tag);
+
+		var tagArr = [];
+		for (var verse in tags) 
+			tagArr = tagArr.concat(tags[verse]);
+		return tagsToVerses(tagArr);
+	}
+
+	function loadVerse(tag, verse) {
+		var i = response[tag].push({ref:verse}) -1;
+		getVerse(verse, function(err, req, body){
+			response[tag][i].content = body;
+			if (!--loadCount) res.json(response);
+		});
+		loadCount++;
+	}
 
 	if (!loadCount) res.json(response); // no matches
 });
@@ -88,8 +118,6 @@ function getVerse(verse, callback){ request(
 	verse + '&key=fd37d8f28e95d3be8cb4fbc37e15e18e',
 	callback
 );}
-
-//console.log(verses);
 
 var port = process.env.PORT || 3000;
 server.listen(port);
