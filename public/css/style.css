@@ -34,6 +34,7 @@ body{
 
 #svgcontainer {
   width:60%;
+  max-height: 80%;
   margin: 0 auto;
 }
 
@@ -43,6 +44,7 @@ body{
 	background-size: contain;
 	background-repeat: no-repeat;
 	padding:0 5%;
+  max-height: 80%;
 	width:40%;
 }
 
@@ -94,7 +96,7 @@ body{
 
 .legend{
 	font-weight:bold;
-	font-size:2em;
+	font-size:1.5em;
 	padding:4px;
   -webkit-transform: rotate(-30deg);
   writing-mode: lr-bt;
