@@ -11,7 +11,7 @@ $("#submit").click(function(e) {
   if (e || e.keyCode == 13) {
     var val = $("#tags").val();
     runGraph("t="+val);
-    $("#tags").empty();
+
   }
 });
 
@@ -32,7 +32,7 @@ function runGraph(tagVal) {
               for(var i = 0; i < d.links.length; i++){
                 graph.addLink(d.links[i].source,d.links[i].target);
               }
-
+              $("#tags").val('');
             },
             function(err){
               alert("Not valid search term!");

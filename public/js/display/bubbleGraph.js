@@ -109,7 +109,7 @@ NodeGraph.prototype = {
 
     var circle = nodeEnter.append("circle")
     .attr("class","nodeBody")
-    .attr("r",20)
+    .attr("r",15)
     .on("mouseover", function(d) {
       $("#versecontainer").empty();
       $("#versecontainer").append("<b>" + d.id + "</b>" + d.content);
@@ -121,8 +121,17 @@ NodeGraph.prototype = {
 
     var colorMap = this.colorMap || {};
     if (colorMap) {
+
       circle.attr("fill", function(d) {
         return colorMap[d.id];});
+      circle.attr("r", function(d) {
+        if (colorMap.hasOwnProperty("keys")) {
+          if (colorMap[d.id] == colorMap["keys"][0]["color"]) {
+            return 25;
+          }
+        }
+        return 15;
+      })
     }
 
     var truncateString = function(input, maxLength) {
