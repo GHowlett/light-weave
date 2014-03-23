@@ -180,6 +180,7 @@ NodeGraph.prototype = {
       .append("div");
 
       legend.text(function(d) {return d.key;})
+      .on("click", function(d) {runGraph("t=" + d.key);})
       .style("color", function(d) {return d.color;});
 
     }
