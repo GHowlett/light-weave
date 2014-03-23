@@ -11,6 +11,7 @@ $("#submit").click(function(e) {
   if (e || e.keyCode == 13) {
     var val = $("#tags").val();
     runGraph("t="+val);
+    $("#tags").empty();
   }
 });
 
