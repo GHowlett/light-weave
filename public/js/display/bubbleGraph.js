@@ -9,14 +9,14 @@
 	@param {string|domElement} el - the element to attach the graph to (ex: "body")
 */
 function NodeGraph(el,w,h){
-	this.el = $(el);
-	this.width = $(el).innerWidth();
-	this.height = $(el).innerHeight();
-	
-	var scope = this;
-	$(window).resize(function(){
-		scope.update();
-	});
+  this.el = $(el);
+  this.width = $(el).innerWidth();
+  this.height = $(el).innerHeight();
+
+  var scope = this;
+  $(window).resize(function(){
+    scope.update();
+  });
 
   //@private
   this._display = d3.select(el).append("svg:svg")
@@ -35,7 +35,7 @@ function NodeGraph(el,w,h){
   this.nodes = this._force.nodes();
   this.links = this._force.links();
   this.colorMap = {};
-
+  this.legendLoaded = false;
   this.update();
 }
 
@@ -84,10 +84,10 @@ NodeGraph.prototype = {
   //NOT DONE - I need some actual data to mess around with
   update : function(){
     //clear
-	this._display.attr("width",0).attr("height",0);
-	this.width = this.el.innerWidth();
-	this.height = this.el.innerHeight();
-	this._display.attr("width",this.width).attr("height",this.height);
+    this._display.attr("width",0).attr("height",0);
+    this.width = this.el.innerWidth();
+    this.height = this.el.innerHeight();
+    this._display.attr("width",this.width).attr("height",this.height);
     this._display.selectAll("*").remove();
     //append
     var link = this._display.selectAll('line.link')
@@ -120,9 +120,6 @@ NodeGraph.prototype = {
       circle.attr("fill", function(d) {
         return colorMap[d.id];});
     }
-
-
-
 
     var truncateString = function(input, maxLength) {
       maxLength = maxLength || 200;
@@ -168,16 +165,19 @@ NodeGraph.prototype = {
     this.update();
   },
   showColors: function() {
+
     if (this.colorMap.hasOwnProperty("keys")) {
       var colorVector = this.colorMap["keys"];
-/*
-      for (var i = 0; i < colorVector.length; i++) {
-        d3.select("#colorcontainer").selectAll("div")
-        .data(colorVector).enter()
-        .append("div").text(function(d) {return d.key;})
-        .attr("color", function(d) {return d.color;});
-      }
-      */
+
+      d3.select(".legend").selectAll("*").remove();
+
+      var legend = d3.select(".legend").selectAll("div")
+      .data(colorVector).enter()
+      .append("div");
+
+      legend.text(function(d) {return d.key;})
+      .style("color", function(d) {return d.color;});
+
     }
   }
 };
