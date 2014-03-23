@@ -27,7 +27,7 @@ var topicalData = fs.readFileSync('topicalList.csv').toString();
 topicalData.split(/\r?\n/).forEach(function(line){
 	var parts = line.split(',');
 	if (!parts[0] || !parts[1]) return;
-	if (parseInt(parts[2]) > 10) { // minimum vote filter
+	if (parseInt(parts[2]) > 500) { // minimum vote filter
 		parts[0] = parts[0].toLowerCase();
 		var tag = synonyms[parts[0]] || parts[0];
 		if (!verses[tag]) verses[tag] = [];
