@@ -182,11 +182,11 @@ NodeGraph.prototype = {
     if (this.colorMap.hasOwnProperty("keys")) {
       var colorVector = this.colorMap["keys"];
 
-      d3.select(".legend").selectAll("*").remove();
+      d3.select("#legendcontainer").selectAll("*").remove();
 
-      var legend = d3.select(".legend").selectAll("div")
+      var legend = d3.select("#legendcontainer").selectAll("div")
       .data(colorVector).enter()
-      .append("div");
+      .append("div").attr("class","legend col-xs-1");
 
       legend.text(function(d) {return d.key;})
       .on("click", function(d) {runGraph("t=" + d.key);})
