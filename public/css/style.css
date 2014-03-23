@@ -33,7 +33,8 @@ body{
 }
 
 #svgcontainer {
-  width:70%;
+  width:60%;
+  margin: 0 auto;
 }
 
 #versecontainer {
@@ -42,7 +43,7 @@ body{
 	background-size: contain;
 	background-repeat: no-repeat;
 	padding:0 5%;
-	width:30%;
+	width:40%;
 }
 
 #searchbar, #colorcontainer, #svgcontainer, #versecontainer{

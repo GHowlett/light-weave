@@ -1,5 +1,5 @@
 /*
-	The main graph that display the data
+	The main graph that displays the data
 */
 
 /*
