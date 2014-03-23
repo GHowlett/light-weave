@@ -98,7 +98,11 @@ NodeGraph.prototype = {
 
     var circle = nodeEnter.append("circle")
     .attr("class","nodeBody")
-    .attr("r",20);
+    .attr("r",20)
+    .on("mouseover", function(d) {
+      $("#versecontainer").empty();
+      $("#versecontainer").append("<b>" + d.id + "</b>" + d.content);
+    });
 
     var colorMap = this.colorMap || {};
     if (colorMap) {
@@ -106,19 +110,8 @@ NodeGraph.prototype = {
         return colorMap[d.id];});
     }
 
-    nodeEnter.append("text")
-    .attr("class", "nodeText")
-    .attr("dx", 12)
-    .attr('dy', ".35em")
-    .text(function(d){
-      return d.id;
-    })
-    .on("mouseover", function(d) {
 
-        $("#versecontainer").empty();
-        $("#versecontainer").append("<b>" + d.id + "</b>" + d.content);
 
-    });
 
     var truncateString = function(input, maxLength) {
       maxLength = maxLength || 200;
@@ -133,11 +126,11 @@ NodeGraph.prototype = {
       return firstPartString + subsString + secondPartString;
     }
 
-    $(".nodeText").tipsy({
-      gravity: 'w',
+    $(".nodeBody").tipsy({
+      gravity: 's',
       html: true,
       title: function() {
-        return truncateString(this.__data__.content);
+        return this.__data__.id;
       }
     });
 
@@ -162,5 +155,18 @@ NodeGraph.prototype = {
     this.nodes.splice(0, this.nodes.length);
     this.links.splice(0, this.links.length);
     this.update();
+  },
+  showColors: function() {
+    if (this.colorMap.hasOwnProperty("keys")) {
+      var colorVector = this.colorMap["keys"];
+/*
+      for (var i = 0; i < colorVector.length; i++) {
+        d3.select("#colorcontainer").selectAll("div")
+        .data(colorVector).enter()
+        .append("div").text(function(d) {return d.key;})
+        .attr("color", function(d) {return d.color;});
+      }
+      */
+    }
   }
 };

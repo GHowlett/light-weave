@@ -19,7 +19,7 @@
   position: absolute;
   top: 40px;
   height: 400;
-  width: 50%;
+  width: 70%;
   left: 0;
 }
 
@@ -27,7 +27,14 @@
   position: absolute;
   top: 40px;
   height: 400;
-  width: 50%;
-  right: 0px;
+  width: 30%;
+  right: 40px;
+  margin: 15px;
   overflow: auto;
+  border-image:url("LightWeave_Sidebar-02.png");
+}
+
+
+#colorcontainer {
+
 }

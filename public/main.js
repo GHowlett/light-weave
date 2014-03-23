@@ -29,6 +29,7 @@ function runGraph(tagVal) {
               for(var i = 0; i < d.links.length; i++){
                 graph.addLink(d.links[i].source,d.links[i].target);
               }
+              graph.showColors();
             },
             function(err){
               alert("Not valid search term!");

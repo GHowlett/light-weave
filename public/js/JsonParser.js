@@ -1,16 +1,19 @@
 var JSONParser = {};
 
 JSONParser.getColorsMap = function(jsonObject) {
-  var colorString = ["#00FFFF", "#8A2BE2", "#7FFF00", "#FF7F50", "#00FFFF", "#9932CC"
-  , "#FFD700", "#90EE90", "#FFB6C1", "#48D1CC", "#DA70D6"];
+  var colorString = ["#007F35","#61BB46","#24866A","#004A46","#003B76","#0073B1","#00B0EF","#A3D7EF","#590047","#883375","#C92E46","#A9719D","#932E2B","#D95934","#AA6435","#F38487","#F8991C","#FFE000","#FDC364","#7E8082"];
   var colorMap = {};
+  colorMap["keys"] = [];
   for (var keyIndex in Object.keys(jsonObject)) {
 
     var key = Object.keys(jsonObject)[keyIndex];
+
     var randomIndex = Math.round(colorString.length * Math.random());
 
     var colorAssignedToKey = colorString[randomIndex];
-    console.log(colorAssignedToKey);
+
+    colorMap["keys"].push({"key": key, "color": colorAssignedToKey});
+
     var values = jsonObject[key];
 
     for (var valIndex in values) {
@@ -20,6 +23,7 @@ JSONParser.getColorsMap = function(jsonObject) {
 
     }
   }
+
   return colorMap;
 }
 
