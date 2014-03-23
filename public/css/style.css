@@ -33,7 +33,8 @@ body{
 }
 
 #svgcontainer {
-  width:70%;
+  width:60%;
+  right: 10%;
 }
 
 #versecontainer {
