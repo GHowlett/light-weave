@@ -27,9 +27,10 @@ function NodeGraph(el,w,h){
 
   //@private
   this._force = d3.layout.force()
-  .gravity(.05)
+  .gravity(.0)
   .distance(100)
-  .charge(-100)
+  .charge(-150)
+  .linkDistance(100)
   .size([w, h]);
 
   this.nodes = this._force.nodes();
@@ -164,6 +165,8 @@ NodeGraph.prototype = {
       .attr("y1", function(d){ return d.source.y; })
       .attr("x2", function(d){ return d.target.x; })
       .attr("y2", function(d){ return d.target.y; })
+      .attr("cx", function(d){ return d.x })
+      .attr("cy", function(d){ return d.y })
 
       node.attr("transform", function(d){
         return "translate(" + [d.x, d.y].join(',') + ")";
