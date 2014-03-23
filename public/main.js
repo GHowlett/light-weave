@@ -17,7 +17,7 @@ $("#submit").click(function(e) {
 var graph = new NodeGraph("#svgcontainer",800,800);
 
 function runGraph(tagVal) {
-  $.getJSON("http://localhost:3000/search?" + tagVal,
+  $.getJSON("search?" + tagVal,
             function(data){
               var paramType = tagVal.slice(0,1);
               graph.clear();
