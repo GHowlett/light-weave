@@ -29,7 +29,7 @@ function NodeGraph(el,w,h){
   this._force = d3.layout.force()
   .gravity(0.1)
   .distance(100)
-  .charge(-100)
+  .charge(-175)
   .linkDistance(100)
   .size([w, h]);
 

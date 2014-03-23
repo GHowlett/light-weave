@@ -22,7 +22,7 @@ body{
 	font-family:helvetica;
 }
 .node{
-
+	stroke:white;
 }
 .link{
 	stroke:rgba(0,0,0,0);
@@ -48,7 +48,7 @@ body{
 	width:40%;
 }
 
-#searchbar, #colorcontainer, #svgcontainer, #versecontainer{
+#searchbar, #colorcontainer, #svgcontainer, #versecontainer, #legendcontainer{
 	box-flex:1;
 	-webkit-box-flex:1;
 }
@@ -88,13 +88,10 @@ body{
 	max-height:50%;
 }
 
-#legend-container {
-  position: absolute;
-  width: 100;
-  bottom: 0;
-  left: 0;
-  max-height:50%;
-  overflow: auto;
+#legendcontainer {
+  height:10%;
+  box-flex:0.1;
+  -webkit-box-flex:0.1;
 }
 
 .legend{
@@ -104,3 +101,25 @@ body{
   -webkit-transform: rotate(-30deg);
   writing-mode: lr-bt;
 }
+@-webkit-keyframes hide{
+	0%{opacity:1;}
+	100%{opacity:0;}
+}
+@-webkit-keyframes show{
+	0%{opacity:0;}
+	100%{opacity:1;}
+}
+.loading{
+	position:fixed;
+	left:calc(50% - 45px);
+	top:calc(50% - 45px);
+	pointer-events:none;
+	opacity:0;
+}
+.loadhide{
+	-webkit-animation:hide 1s forwards;
+}
+.loadshow{
+	-webkit-animation:show 1s forwards;
+}
+
